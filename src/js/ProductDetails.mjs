@@ -1,71 +1,95 @@
-import getLocalStorage from "./utils.mjs"
+import { getLocalStorage, setLocalStorage } from "./utils.mjs"
+
 
 export default class ProductDatails {
     constructor(productId, dataSource) {
         this.productId = productId;
         this.product = {};
         this.dataSource = dataSource;
+    };
+    // async init() {
+    //     // use the datasource to get the details for the current product. findProductById will return a promise! use await or .then() to process it
+    //     this.product = await this.dataSource.findProductById(this.product);
 
-        // this.category = category;
-        // this.path = `../json/${this.category}.json`;
-    }
+    //     // the product details are needed before rendering the HTML
+    //     this.renderProductDetails();
 
+    //     // once the HTML is rendered, add a listener to the Add to Cart button
+    //     document.getElementById('addToCart')
+    //         .addEventListener('click', this.addToCart.bind(this));
+
+    //     // Notice the .bind(this). This callback will not work if the bind(this) is missing. Review the readings from this week on 'this' to understand why.
+
+
+
+    // }
     async init() {
-        // use the datasource to get the details for the current product. findProductById will return a promise! use await or .then() to process it
-        this.product = await this.dataSource.findProductById(this.product);
+        // get product details from data source
+        this.product = await this.dataSource.findProductById(this.productId);
 
-        // the product details are needed before rendering the HTML
+        // render product to the page
         this.renderProductDetails();
 
-        // once the HTML is rendered, add a listener to the Add to Cart button
-        document.getElementById('addToCart')
-            .addEventListener('click', this.addToCart.bind(this));
-
-        // Notice the .bind(this). This callback will not work if the bind(this) is missing. Review the readings from this week on 'this' to understand why.
-
-
-
+        // attach event listener AFTER rendering
+        document
+            .getElementById("addToCart")
+            .addEventListener("click", this.addProductToCart.bind(this));
     }
 
-    addProductToCart(product) {
+    addProductToCart() {
         const cartItems = getLocalStorage("so-cart") || [];
-        cartItems.push(product)
+        cartItems.push(this.product);
+
         setLocalStorage("so-cart", cartItems);
     }
 
+    // renderProductDetails() {
+    //     // generate and populae the HTML to display the product details
+    //     const tenplate = document.querySelector("product-card")
+    //     const productList = document.querySelector("product-list")
+
+    //     products.forEach(product => {
+    //         const clone = template.content.cloneNode(true);
+    //         const [title, productName, img, price, color, description, addToCartBtn] = clone.querySelectorAll("h3, h2, img, p, p, p, button")
+
+    //         title.textcontent = this.product.Brand.Name;
+    //         productName.textcontent = this.product.NameWithoutBrand
+    //         img.src = this.product.Image
+    //         img.alt = this.product.NameWithoutBrand
+    //         price.textcontent = this.product.FinalPrice
+    //         color.textcontent = this.product.Colors.ColorName
+    //         description.textcontent = this.product.DescriptionHtmlSimple
+    //         addToCartBtn.dataset = this.productId
+
+    //         productList.appendChild(clone);
+    //     });
+
+    // };
 
 
     renderProductDetails() {
-        // generate and populae the HTML to display the product details
-        const tenplate = document.querySelector("product-card")
-        const productList = document.querySelector("product-list")
+        if (!this.product) {
+            console.error("Product not found:", this.productId);
+            return;
+        }
 
-        products.forEach(product => {
-            const clone = template.content.cloneNode(true);
-            const [title, productName, img, price, color, description, addToCartBtn] = clone.querySelectorAll("h3, h2, img, p, p, p, button")
+        document.querySelector("h3").textContent =
+            this.product.Brand?.Name ?? "";
 
-            title.textcontent = this.product.Brand.Name;
-            productName.textcontent = this.product.NameWithoutBrand
-            img.src = this.product.Image
-            img.alt = this.product.NameWithoutBrand
-            price.textcontent = this.product.FinalPrice
-            color.textcontent = this.product.Colors.ColorName
-            description.textcontent = this.product.DescriptionHtmlSimple
-            addToCartBtn.dataset = this.productId
+        document.querySelector("h2").textContent =
+            this.product.NameWithoutBrand;
 
-            productList.appendChild(clone);
-        });
+        const img = document.getElementById("productImage");
+        img.src = this.product.Image;
+        img.alt = this.product.NameWithoutBrand;
 
+        document.getElementById("productPrice").textContent =
+            `$${this.product.FinalPrice}`;
 
-    }
+        document.getElementById("productColor").textContent =
+            this.product.Colors?.[0]?.ColorName ?? "";
 
-    getData() {
-        return fetch(this.path)
-            .then(convertToJson)
-            .then((data) => data);
-    }
-    async findProductById(id) {
-        const products = await this.getData();
-        return products.find((item) => item.Id === id);
+        document.getElementById("productDesc").innerHTML =
+            this.product.DescriptionHtmlSimple;
     }
 }
