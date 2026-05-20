@@ -22,7 +22,7 @@ export default class ProductList {
     async init() {
         const productList = await this.dataSource.getData();
         this.renderList(productList)
-        console.log(productList)
+        // console.log(productList)
 
     }
 
