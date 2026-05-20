@@ -1,7 +1,7 @@
 import { getLocalStorage, setLocalStorage } from "./utils.mjs"
 
 
-export default class ProductDatails {
+export default class ProductDetails {
     constructor(productId, dataSource) {
         this.productId = productId;
         this.product = {};
@@ -23,7 +23,6 @@ export default class ProductDatails {
     addProductToCart() {
         const cartItems = getLocalStorage("so-cart") || [];
         cartItems.push(this.product);
-
         setLocalStorage("so-cart", cartItems);
     }
 
@@ -31,6 +30,10 @@ export default class ProductDatails {
     renderProductDetails() {
         if (!this.product) {
             console.error("Product not found:", this.productId);
+            const mainElement = document.querySelector("main");
+            if (mainElement) {
+              mainElement.innerHTML = "<h2>Product not found</h2>";
+            }
             return;
         }
 
