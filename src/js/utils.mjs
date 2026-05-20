@@ -36,5 +36,5 @@ export function renderListWithTemplate(templateFn, parentElement, list, position
     parentElement.innerHTML = "";
   }
 
-  parentElement.insertAdjacentHTML(position, template.join(""))
+  parentElement.insertAdjacentHTML(position, template.join(""));
 }
