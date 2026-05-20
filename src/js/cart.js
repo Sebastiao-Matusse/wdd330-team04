@@ -1,7 +1,7 @@
 import { getLocalStorage } from "./utils.mjs";
 
 function renderCartContents() {
-  const cartItems = getLocalStorage("so-cart");
+  const cartItems = getLocalStorage("so-cart") || [];
   const htmlItems = cartItems.map((item) => cartItemTemplate(item));
   document.querySelector(".product-list").innerHTML = htmlItems.join("");
 }
@@ -13,7 +13,7 @@ function cartItemTemplate(item) {
       src="${item.Image}"
       alt="${item.Name}"
     />
-  </a>
+  </a> 
   <a href="#">
     <h2 class="card__name">${item.Name}</h2>
   </a>
