@@ -11,10 +11,9 @@ export default class ProductData {
     this.category = category;
     this.path = `../json/${this.category}.json`;
   }
-  getData() {
-    return fetch(this.path)
-      .then(convertToJson)
-      .then((data) => data);
+  async getData() {
+    const response=await fetch(this.path);
+    return await convertToJson(response);
   }
   async findProductById(id) {
     const products = await this.getData();
