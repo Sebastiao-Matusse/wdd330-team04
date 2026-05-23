@@ -18,6 +18,13 @@ export default class ProductDetails {
         document
             .getElementById("addToCart")
             .addEventListener("click", this.addProductToCart.bind(this));
+
+            document
+                .getElementById("addToWishlist")
+                .addEventListener(
+           "click",
+            this.addProductToWishlist.bind(this)
+        );
     }
 
     addProductToCart() {
@@ -25,7 +32,25 @@ export default class ProductDetails {
         cartItems.push(this.product);
         setLocalStorage("so-cart", cartItems);
     }
+    
+    addProductToWishlist() {
+    const wishlist =
+        getLocalStorage("so-wishlist") || [];
 
+    const exists = wishlist.find(
+        item => item.Id === this.product.Id
+    );
+
+    if (!exists) {
+        wishlist.push(this.product);
+
+        setLocalStorage("so-wishlist", wishlist);
+
+        alert("Added to wishlist!");
+    } else {
+        alert("Already in wishlist!");
+    }
+    }
 
     renderProductDetails() {
         if (!this.product) {
