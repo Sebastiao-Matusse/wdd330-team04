@@ -1,9 +1,11 @@
-import { getLocalStorage } from "./utils.mjs";
+import { getLocalStorage, setLocalStorage } from "./utils.mjs";
 
 function renderCartContents() {
   const cartItems = getLocalStorage("so-cart");
   const htmlItems = cartItems.map((item) => cartItemTemplate(item));
   document.querySelector(".product-list").innerHTML = htmlItems.join("");
+
+  removeFromCartHandler();
 }
 
 function cartItemTemplate(item) {
@@ -20,9 +22,25 @@ function cartItemTemplate(item) {
   <p class="cart-card__color">${item.Colors[0].ColorName}</p>
   <p class="cart-card__quantity">qty: 1</p>
   <p class="cart-card__price">$${item.FinalPrice}</p>
+  
+  <span  data-id="${item.Id}" class="removeFromCart btn-close">X</span>
 </li>`;
-
   return newItem;
 }
 
 renderCartContents();
+
+async function removeFromCart(e) {
+  const productId = e.target.dataset.id;
+  const cartItems = getLocalStorage("so-cart") || [];
+  const newCartItems = cartItems.filter((c) => c.Id !== productId);
+  setLocalStorage("so-cart", newCartItems);
+  renderCartContents();
+}
+
+function removeFromCartHandler() {
+  const targets = document.querySelectorAll(".removeFromCart");
+  targets.forEach((target) => {
+    target.addEventListener("click", removeFromCart);
+  });
+}
