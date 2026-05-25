@@ -333,3 +333,21 @@ footer {
   font-size: 0.85em;
   box-shadow: 3px 3px 5px rgba(0,0,0,0.2);
 }
+
+.hide {
+  display: none !important;
+}
+
+.cart-footer {
+  display: flex;
+  flex-direction: column; 
+  align-items: flex-end;  
+  margin: 2rem 5% 2rem auto; 
+  max-width: 300px;       
+  text-align: right;      
+}
+
+.cart-footer .btn {
+  width: 100%;            
+  margin-top: 1rem;
+}
