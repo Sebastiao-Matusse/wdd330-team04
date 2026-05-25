@@ -254,6 +254,7 @@ button {
   .cart-card {
     font-size: inherit;
     grid-template-columns: 150px auto 15%;
+    position: relative;
   }
 }
 
@@ -350,4 +351,18 @@ footer {
 .cart-footer .btn {
   width: 100%;            
   margin-top: 1rem;
+}
+
+.removeFromCart {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+  font-size: 1.2rem;
+  transition: transform 0.2s ease;
+  z-index: 10; 
+}
+
+.removeFromCart:hover {
+  transform: scale(1.2); 
 }
