@@ -58,8 +58,7 @@ export async function loadHeaderFooter() {
 
   const headerTemplate = await loadTemplate("../partials/header.html");
   const footerTemplate = await loadTemplate("../partials/footer.html");
-  // using the path as (public/partials/footer.html) for footer or header works
-  // but using the (../) is preferrable
+  
 
   renderWithTemplate(headerTemplate, mainHeader);
   renderWithTemplate(footerTemplate, mainFooter);
