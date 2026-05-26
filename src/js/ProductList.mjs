@@ -20,22 +20,30 @@ export default class ProductList {
     }
 
     async init() {
-        const productList = await this.dataSource.getData();
+        const productList = await this.dataSource.getData(this.category);
+        // const productList = await this.dataSource.getData();
         this.renderList(productList)
         console.log(productList)
 
-    }
+        const titleElement = document.querySelector(".category-title");
+        if (titleElement) {
+            titleElement.textContent = `Top Products: ${this.category.charAt(0).toUpperCase() + this.category.slice(1)}`;
 
+        }
+    }
     renderList(list) {
-        // this.listElement.innerHTML = "";
+        //     this.listElement.innerHTML = "";
+        //     const htmlStrings = list.map((product) => this.productCardTemplate(product));
+        // this.listElement.insertAdjacentHTML("beforeend", htmlStrings.join(""));
+ 
         renderListWithTemplate(productCardTemplate, this.listElement, list, "afterbegin", true);
-
     }
+    
+
 }
 
-
-// function renderCartContents() {
+// function renderCartContents() 
 //     const cartItems = getLocalStorage("so-cart");
 //     const htmlItems = cartItems.map((item) => cartItemTemplate(item));
 //     document.querySelector(".product-list").innerHTML = htmlItems.join("");
-// }
+// 
