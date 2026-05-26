@@ -272,3 +272,37 @@ footer {
   font-size: var(--small-font);
   padding: 1em;
 }
+
+
+.category-navigation {
+  margin: 2rem auto;
+  text-align: center;
+}
+
+.category-grid {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+
+.category-card-link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+  color: #333;
+  width: 120px;
+  transition: transform 0.2s ease;
+}
+
+.category-card-link img {
+  width: 80px;
+  height: 80px;
+  margin-bottom: 0.5rem;
+}
+
+.category-card-link:hover {
+  transform: scale(1.1);
+}
