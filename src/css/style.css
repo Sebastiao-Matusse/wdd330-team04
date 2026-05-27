@@ -272,3 +272,23 @@ footer {
   font-size: var(--small-font);
   padding: 1em;
 }
+
+
+.quantity-grid {
+  display: grid;
+  grid-template-columns: 1fr 50px 1fr;
+  gap: 15px;
+  text-align: center;
+  align-items: center;
+}
+
+.quantity-grid>button {
+  padding: 0;
+  width: 35px;
+  border-radius: 100%;
+  font-size: 35px;
+}
+
+.quantity-grid>button:hover {
+  background-color: #308013;
+}
