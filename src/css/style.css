@@ -291,6 +291,9 @@ footer {
 
 .quantity-grid>button:hover {
   background-color: #308013;
+
+}  
+
 .product-category {
   display: flex;
   justify-content: space-around;
