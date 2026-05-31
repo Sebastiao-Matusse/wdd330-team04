@@ -8,6 +8,16 @@ function renderCartContents() {
   document.querySelector(".product-list").innerHTML = htmlItems.join("");
 }
 
+// calculate total
+  const total = cartItems.reduce((sum, item) => {
+    return sum + item.FinalPrice;
+  }, 0);
+
+  // display total
+  document.querySelector("#cart-total").textContent =
+    total.toFixed(2);
+
+
 function cartItemTemplate(item) {
   const newItem = `<li class="cart-card divider">
   <a href="#" class="cart-card__image">

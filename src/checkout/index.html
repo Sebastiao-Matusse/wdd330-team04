@@ -1,26 +1,123 @@
 <!doctype html>
-
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Checkout</title>
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="/src/css/style.css" />
+</head>
 
-    <title>Sleep Outside | Checkout</title>
+<body>
 
-    <link rel="stylesheet" href="/src/css/style.css" />
-  </head>
+<header id="main-header"></header>
 
-  <body>
-    
-  <header id="main-header" class="divider"></header>
+<main class="divider">
 
-    <main class="divider">
-      <section class="products">
-        <h2>Review & Place your Order</h2>
-      </section>
-    </main>
+  <h2>Checkout</h2>
 
-    <footer id="main-footer"></footer>
-  </body>
+  <form id="checkout-form">
+
+    <fieldset>
+      <legend>Customer Information</legend>
+
+      <label>
+        First Name
+        <input type="text" name="fname" required />
+      </label>
+
+      <label>
+        Last Name
+        <input type="text" name="lname" required />
+      </label>
+
+      <label>
+        Street Address
+        <input type="text" name="street" required />
+      </label>
+
+      <label>
+        City
+        <input type="text" name="city" required />
+      </label>
+
+      <label>
+        State
+        <input type="text" name="state" required />
+      </label>
+
+      <label>
+        Zip Code
+        <input type="text" id="zip" name="zip" required />
+      </label>
+    </fieldset>
+
+    <fieldset>
+      <legend>Payment Information</legend>
+
+      <label>
+        Card Number
+        <input
+          type="text"
+          name="cardNumber"
+          required
+        />
+      </label>
+
+      <label>
+        Expiration
+        <input
+          type="text"
+          name="expiration"
+          required
+        />
+      </label>
+
+      <label>
+        Security Code
+        <input
+          type="text"
+          name="code"
+          required
+        />
+      </label>
+    </fieldset>
+
+    <section class="order-summary">
+      <h3>Order Summary</h3>
+
+      <p>
+        Subtotal:
+        $<span id="subtotal">0.00</span>
+      </p>
+
+      <p>
+        Tax:
+        $<span id="tax">0.00</span>
+      </p>
+
+      <p>
+        Shipping:
+        $<span id="shipping">0.00</span>
+      </p>
+
+      <p>
+        Total:
+        $<span id="orderTotal">0.00</span>
+      </p>
+    </section>
+
+    <button type="submit">
+      Complete Checkout
+    </button>
+
+  </form>
+
+</main>
+
+<footer id="main-footer"></footer>
+
+<script type="module" src="./checkout.js"></script>
+
+</body>
 </html>
