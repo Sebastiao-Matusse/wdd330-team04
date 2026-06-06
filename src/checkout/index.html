@@ -1,24 +1,90 @@
 <!doctype html>
-
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
     <title>Sleep Outside | Checkout</title>
-
-    <link rel="stylesheet" href="/src/css/style.css" />
+    <link rel="stylesheet" href="/css/style.css" />
+    <script src="../js/checkout.js" type="module"></script>
   </head>
 
   <body>
-    
-  <header id="main-header" class="divider"></header>
+    <header id="main-header"></header>
 
-    <main class="divider">
-      <section class="products">
-        <h2>Review & Place your Order</h2>
-      </section>
+    <main class="divider checkout-page">
+      <h2>Review and Place Your Order</h2>
+      
+      <form id="checkout-form" class="checkout-container">
+    
+        <div class="checkout-fields">
+          <fieldset>
+            <legend>Shipping & Billing Address</legend>
+            
+            <div class="form-group">
+              <label for="firstName">First Name</label>
+              <input type="text" id="firstName" name="fname" required />
+            </div>
+
+            <div class="form-group">
+              <label for="lastName">Last Name</label>
+              <input type="text" id="lastName" name="lname" required />
+            </div>
+
+            <div class="form-group">
+              <label for="street">Street Address</label>
+              <input type="text" id="street" name="street" required />
+            </div>
+
+            <div class="form-group">
+              <label for="city">City</label>
+              <input type="text" id="city" name="city" required />
+            </div>
+
+            <div class="form-group">
+              <label for="state">State</label>
+              <input type="text" id="state" name="state" required />
+            </div>
+
+            <div class="form-group">
+              <label for="zip">Zip Code</label>
+              <input type="text" id="zip" name="zip" pattern="^\d{5}$" title="Five digit zip code" required />
+            </div>
+          </fieldset>
+
+          <fieldset>
+            <legend>Payment Information</legend>
+            
+            <div class="form-group">
+              <label for="cardNumber">Credit Card Number</label>
+              <input type="text" id="cardNumber" name="cardNumber" pattern="^\d{13,16}$" title="Card number must be 13 to 16 digits"  value="1234123412341234" required />
+            </div>
+
+            <div class="form-group">
+              <label for="expiration">Expiration Date (MM/YY)</label>
+              <input type="text" id="expiration" name="expiration" placeholder="MM/YY" pattern="^(0[1-2]|1[0-2])\/\d{2}$" title="Format must be MM/YY" required />
+            </div>
+
+            <div class="form-group">
+              <label for="code">Security Code (CVV)</label>
+              <input type="password" id="code" name="code" pattern="^\d{3,4}$" title="3 or 4 digit security code" value="123" required />
+            </div>
+          </fieldset>
+          </div>
+ <div class="checkout-sidebar">
+      <aside class="order-summary">
+        <h3>Order Summary</h3>
+        <ul>
+          <li>Subtotal: <span id="checkout-subtotal">$0.00</span></li>
+          <li>Shipping Estimate: <span id="checkout-shipping">$0.00</span></li>
+          <li>Tax: <span id="checkout-tax">$0.00</span></li>
+          <li class="order-total-row"><strong>Order Total: <span id="checkout-total">$0.00</span></strong></li>
+        </ul>
+      </aside>
+
+       <button type="submit" id="checkoutSubmit" class="btn">Place Order</button>
+    </div>
+
+  </form>
     </main>
 
     <footer id="main-footer"></footer>

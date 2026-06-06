@@ -1,15 +1,23 @@
+import { loadHeaderFooter, getParam } from "./utils.mjs";
+import ExternalServices from "./ExternalServices.mjs";
 import ProductList from "./ProductList.mjs";
-import ProductData from "./ProductData.mjs";
-import { getParam, loadHeaderFooter } from "./utils.mjs";
 
 loadHeaderFooter();
 
-const element = document.querySelector(".product-list");
-const sortInput = document.getElementById("product-sort-input");
-const category = getParam("category");
-const dataSource = new ProductData();
-const productList = new ProductList(category, dataSource, element, sortInput);
+const searchQuery = getParam("search");
+const categoryParam = getParam("category");
 
-document.getElementById("pro-cat").innerHTML = category.replace("-", " ");
-productList.init();
-productList.initSort();
+const currentQuery = searchQuery || categoryParam;
+
+const listElement = document.querySelector(".product-list");
+
+if (listElement && currentQuery) {
+  const dataSource = new ExternalServices();
+  const myList = new ProductList(
+    currentQuery,
+    dataSource,
+    listElement,
+    !!searchQuery,
+  );
+  myList.init();
+}
