@@ -1,4 +1,4 @@
-import { getLocalStorage } from "./utils.mjs";
+import { getLocalStorage, alertMessage } from "./utils.mjs";
 import ExternalServices from "./ExternalServices.mjs";
 
 function formDataToJSON(formElement) {
@@ -17,7 +17,7 @@ function packageItems(items) {
     id: item.Id,
     name: item.Name,
     price: item.FinalPrice,
-    quantity: 1, 
+    quantity: 1,
   }));
 }
 
@@ -82,6 +82,8 @@ export default class CheckoutProcess {
   }
 
   async checkoutForm(formElement) {
+    const oldAlerts = document.querySelectorAll(".alert");
+    oldAlerts.forEach((alert) => alert.remove());
     const orderPayload = formDataToJSON(formElement);
 
     orderPayload.orderDate = new Date().toISOString();
@@ -94,11 +96,21 @@ export default class CheckoutProcess {
 
     try {
       const res = await this.services.checkout(orderPayload);
-      console.log("Successful server response:", res);
+      console.log("Server accepted the order successfully:", res);
       return res;
     } catch (err) {
-      console.error("Server rejected the order or an error occurred:", err);
-      throw err;
+      console.error("CheckoutProcess caught an error from the server:", err);
+      if (err.name === "servicesError") {
+        for (const key in err.message) {
+          alertMessage(err.message[key]);
+        }
+      } else {
+        alertMessage(
+          "A network error occurred. Please verify your connection and try again.",
+        );
+      }
+
+      return null;
     }
   }
 }
