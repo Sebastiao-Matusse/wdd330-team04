@@ -30,10 +30,45 @@ export default class ExternalServices {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(orderPayload), 
+      body: JSON.stringify(orderPayload),
     };
 
     const response = await fetch(`${baseURL}checkout`, options);
     return await convertToJson(response);
+  }
+
+  async searchAllProducts(query) {
+    const categories = ["tents", "backpacks", "hammocks", "sleeping-bags"];
+
+    try {
+      const promises = categories.map((category) => this.getData(category));
+      const allResults = await Promise.all(promises);
+      const allProducts = allResults.flat();
+      const cleanQuery = query.toLowerCase().trim();
+
+      return allProducts.filter((product) => {
+        const nameMatch = product.Name
+          ? product.Name.toLowerCase().includes(cleanQuery)
+          : false;
+
+        const brandMatch =
+          product.Brand && product.Brand.Name
+            ? product.Brand.Name.toLowerCase().includes(cleanQuery)
+            : false;
+
+        const descMatch = product.DescriptionHtmlSimple
+          ? product.DescriptionHtmlSimple.toLowerCase().includes(cleanQuery)
+          : false;
+
+        const categoryMatch = product.Category
+          ? product.Category.toLowerCase().includes(cleanQuery)
+          : false;
+
+        return nameMatch || brandMatch || descMatch || categoryMatch;
+      });
+    } catch (error) {
+      console.error("Error searching all files:", error);
+      return [];
+    }
   }
 }
